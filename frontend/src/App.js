@@ -1,7 +1,7 @@
 import "./App.css";
 import "./components/LoginButton.css";
 import { useEffect, useState, useRef } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route,Switch,useNavigate} from "react-router-dom";
 import { AboutUs } from "./pages/AboutUs";
 import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -13,9 +13,16 @@ import { addDays, subDays } from 'date-fns';
 import format from 'date-fns/format'
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css'
+import Home from "./components/Chart"
+import ExampleChart from "./components/Line"
+import { Link } from 'react-router-dom';
+import Ex from "./components/Navigate"
+
+
 
 const CLIENT_ID = "e7231ef0e449bce7d695";
 function App() {
+  
   const [rerender, setRerender] = useState(false);
   const [userData, setUserData] = useState({});
   const [repositories, setRepositories] = useState([]);
@@ -43,9 +50,10 @@ function App() {
     }
   ]);
   const [open, setOpen] = useState(false);
+
   // const [value, setValue] = useState(["2000/02/03", null]);
   // const [value, setValue] = React.useState<DateRangePickerDay>([null, null]);
-
+  
 
   const refOne = useRef(null);
 
@@ -56,6 +64,7 @@ function App() {
   // get code
   // use code to get access token ( code can be only used once)
   useEffect(() => {
+    
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
@@ -300,11 +309,15 @@ function App() {
       <Router>
         <Routes>
           <Route path='/about-us' element={<AboutUs />} />
+          <Route  path="/ch" element={<ExampleChart />} />
         </Routes>
       </Router>
+      
+
       {/* <header className="App-header"> */}
       {localStorage.getItem("access_token") ? (
         <div className="mainPage">
+            
 
           <div className="nav">
             <Button startIcon={<AccountTreeOutlinedIcon />} style={{
@@ -422,9 +435,12 @@ function App() {
                 </>
               ) : (<> </>)
             }
+            
           </div>
-
+          <button >charts</button>
+          
         </div> // main page end
+        
       ) : (
         <>
           <div className="card">
